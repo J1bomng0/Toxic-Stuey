@@ -87,25 +87,30 @@ const messages = [
 
 function showRandomMessage() {
     const messageBox = document.getElementById('message-box');
-    const message = messages[Math.floor(Math.random() * messages.length)];
     const sound = document.getElementById('toxic-sound');
 
-    messageBox.innerText = message;
-    messageBox.style.display = 'block';
+    const showMessage = () => {
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        messageBox.innerText = message;
+        messageBox.style.display = 'block';
 
-    // Play sound
-    sound.currentTime = 0; // rewind to start
-    sound.play();
+        sound.currentTime = 0;
+        sound.play();
 
-    // Hide message after 5 seconds
-    setTimeout(() => {
-        messageBox.style.display = 'none';
-    }, 5000);
+        setTimeout(() => {
+            messageBox.style.display = 'none';
+        }, 5000);
+    };
 
-    // Schedule next message in 1–2 minutes
-    const nextDelay = (Math.floor(Math.random() * 2) + 1) * 60 * 1000;
-    setTimeout(showRandomMessage, nextDelay);
+    // Show first message right away
+    showMessage();
+
+    // Then repeat every 1–2 minutes
+    setInterval(() => {
+        showMessage();
+    }, (Math.floor(Math.random() * 2) + 1) * 60 * 1000);
 }
+
 
 startTimer();
 showRandomMessage();
