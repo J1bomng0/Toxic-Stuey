@@ -1,28 +1,32 @@
-let timer;
-let minutes = 15;
-let seconds = 0;
-let isPaused = true; // Timer will be paused initially
-let enteredTime = null;
+let timer
+let minutes = 25
+let seconds = 0
+let isPaused = true
+let enteredTime = null
 
 function startTimer() {
+    clearInterval(timer); 
     timer = setInterval(updateTimer, 1000);
 }
 
 function updateTimer() {
     const timerElement = document.getElementById('timer');
-    timerElement.textContent = formatTime(minutes, seconds);
 
-    if (minutes === 0 && seconds === 0) {
-        clearInterval(timer);
-        alert('Time is up! Take a break.');
-    } else if (!isPaused) {
-        if (seconds > 0) {
-            seconds--;
+    if (!isPaused) {
+        if (minutes === 0 && seconds === 0) {
+            clearInterval(timer);
+            alert('Time is up! Take a break. Good Job!');
         } else {
-            seconds = 59;
-            minutes--;
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                seconds = 59;
+                minutes--;
+            }
         }
     }
+
+    timerElement.textContent = formatTime(minutes, seconds);
 }
 
 function formatTime(minutes, seconds) {
