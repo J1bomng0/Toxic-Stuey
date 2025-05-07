@@ -1,8 +1,8 @@
-let timer
-let minutes = 15
-let seconds = 0
-let isPaused = false
-let enteredTime = null
+let timer;
+let minutes = 15;
+let seconds = 0;
+let isPaused = true; // Timer will be paused initially
+let enteredTime = null;
 
 function startTimer() {
     timer = setInterval(updateTimer, 1000);
@@ -12,12 +12,12 @@ function updateTimer() {
     const timerElement = document.getElementById('timer');
     timerElement.textContent = formatTime(minutes, seconds);
 
-    if(minutes === 0 && seconds === 0) {
+    if (minutes === 0 && seconds === 0) {
         clearInterval(timer);
         alert('Time is up! Take a break.');
     } else if (!isPaused) {
-        if(seconds > 0) {
-            seconds --;
+        if (seconds > 0) {
+            seconds--;
         } else {
             seconds = 59;
             minutes--;
@@ -32,11 +32,10 @@ function formatTime(minutes, seconds) {
 function togglePauseResume() {
     const pauseResumeButton = document.querySelector('.buttons button');
     isPaused = !isPaused;
-    if(isPaused) {
+    if (isPaused) {
         clearInterval(timer);
         pauseResumeButton.textContent = 'Resume';
-    } 
-    else {
+    } else {
         startTimer();
         pauseResumeButton.textContent = 'Pause';
     }
@@ -61,18 +60,14 @@ function chooseTime() {
         minutes = enteredTime;
         seconds = 0;
         isPaused = false;
-        const timerElement =
-            document.getElementById('timer');
-        timerElement.textContent =
-            formatTime(minutes, seconds);
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = formatTime(minutes, seconds);
         clearInterval(timer);
-        const pauseResumeButton =
-            document.querySelector('.control-buttons button');
+        const pauseResumeButton = document.querySelector('.control-buttons button');
         pauseResumeButton.textContent = 'Pause';
         startTimer();
     } else {
-        alert('Invalid input. Please enter'+
-              ' a valid number greater than 0.');
+        alert('Invalid input. Please enter a valid number greater than 0.');
     }
 }
 
@@ -88,29 +83,29 @@ const messages = [
     "და სტიპენდია?",
     "დე, მა, საგანი შემეტენა",
     "Imagine man telling you, he's smarter"
-  ];
-  
-  function showRandomMessage() {
+];
+
+function showRandomMessage() {
     const messageBox = document.getElementById('message-box');
     const message = messages[Math.floor(Math.random() * messages.length)];
     const sound = document.getElementById('toxic-sound');
-  
+
     messageBox.innerText = message;
     messageBox.style.display = 'block';
-  
+
     // Play sound
     sound.currentTime = 0; // rewind to start
     sound.play();
-  
-    // Hide message after 3 seconds
+
+    // Hide message after 5 seconds
     setTimeout(() => {
-      messageBox.style.display = 'none';
+        messageBox.style.display = 'none';
     }, 5000);
-  
+
     // Schedule next message in 1–2 minutes
     const nextDelay = (Math.floor(Math.random() * 2) + 1) * 60 * 1000;
     setTimeout(showRandomMessage, nextDelay);
-  }
+}
 
 startTimer();
-showRandomMessage(); 
+showRandomMessage();
